@@ -1,0 +1,24 @@
+body {
+    display: flex;
+    flex-direction: column;
+}
+.feature {
+    fill: lightgreen;
+    stroke: black;
+    stroke-width: 1px;
+    stroke-linejoin: round;
+}
+
+h1 {
+    font-family: sans-serif;
+    text-align: center;
+}
+image {
+    transform: translate(-1em, -1em);
+    width: 4em;
+	height: 2em;
+}
+svg {
+    width: 1900px;
+    height: 800px;
+}

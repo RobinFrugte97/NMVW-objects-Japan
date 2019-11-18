@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Point on a map D3</title>
+    <script src="js/dataCleanTest.js"></script>
+</head>
+    <body>
+        <svg viewbox="0 0 1000 1000">
+            <defs>
+                <radialGradient id="myGradient">
+                    <stop offset="10%" stop-color="gold" />
+                    <stop offset="95%" stop-color="red" />
+                </radialGradient>
+            </defs>
+        
+            <!-- using my linear gradient -->
+            <g>
+                <circle cx="500" cy="250" r="120" fill="url('#myGradient')">
+                    <animate attributeName="r" values="150;175;150" dur="3s" repeatCount="indefinite" />
+                </circle>
+                <circle cx="450" cy="200" r="20" fill="black"></circle>
+                <circle cx="550" cy="200" r="20" fill="black"></circle>
+                <ellipse cx="500" cy="300" rx="40" ry="20" fill="black"></ellipse>
+                <rect width="20" height="20" x="510" y="250" fill="white"></rect>
+            </g>
+        </svg>
+    </body>
+</html>
