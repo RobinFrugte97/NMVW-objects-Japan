@@ -2,17 +2,13 @@
 
 [Objecten van Japan](https://robinfrugte97.github.io/functional-programming/public/index.html)
 
-# Functional programming
+# Frontend data
 
-The goal of this course is to use d3 to clean data and make a dynamic representation (data visualisarion); data is functionally transformed to a visualisation of museum objects from [NMVW](http://collectie.wereldculturen.nl/).
-More about functional programming can be found in my [wiki](https://github.com/RobinFrugte97/functional-programming/wiki/Functional-programming).
+More info can be found in my [wiki](https://github.com/RobinFrugte97/functional-programming/wiki/Functional-programming).
 
 
 # Concept
 
-![](https://github.com/RobinFrugte97/functional-programming/raw/master/src/images/screenshotEveryObject.png)
-
-My concept is about showing object images on a chart. The museum has a lot of different objects from all over the world. I liked the idea of plotting the objects on a map. I decided to focus specifically on Japan, because Japan has a lot of interesting objects. I want to use the coordinates of each object to plot them on a map of Japan.
 
 
 # Wiki
@@ -82,19 +78,8 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 ```
 ### Original data
 
-![](https://github.com/RobinFrugte97/functional-programming/raw/master/src/images/oldData.jpg)
-
-This is the original data I'm getting from the SPARQL query. It's already pretty clean and almost ready for use. As you can see the data is nested in an object. This is something I will change. The geographic coordinates latitude and longitude come as type `string`. If I want to plot these coordinates I will have to change them to type `number`.
-
-
-![](https://github.com/RobinFrugte97/functional-programming/raw/master/src/images/newData.jpg)
-
-This is the data how I'm using it in my application after doing a small bit of cleaning. As you can see the nested data is gone and the coordinates are `number`'s. 
 
 ---
 ## Acknowledgements
 
 - [NMVW](http://collectie.wereldculturen.nl/), for giving us the opportunity to work with their data,
-- [Fun Fun Function](https://www.youtube.com/channel/UCO1cgjhGzsSYb1rsB4bFe4Q), for his course on functional programming,
-- [Kris Kuiper](https://github.com/kriskuiper/Functional-Programming-In-JavaScript), for his useful documentation of functional programming,
-- [d3 wiki](https://github.com/d3/d3/wiki), for helping me understand what d3 functions I need to use for my application.
