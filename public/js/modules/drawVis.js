@@ -2,7 +2,7 @@ export function drawVis(chartLocation, data) {
     d3.json(chartLocation).then(topo => {
         d3.select("body").append("svg")
         drawChart(topo)
-        drawObjects(topo, data)
+        // drawObjects(topo, data)
     })
 } 
 
@@ -17,18 +17,18 @@ function drawChart(topo) {
             .attr("d", setElementPosition(topo)[0])
 }
 
-function drawObjects(topo, data) {
-    let projection = setElementPosition(topo)[1]
-        data.then(data => {
-            console.log("Drawing objects on the map..")
-            d3.select("svg").selectAll("image")
-                .data(data).enter() 
-                .append("image")
-                    .attr("xlink:href", d => d.objectImage)
-                    .attr("x", function (d) { return projection([d.long, d.lat])[0] })
-                    .attr("y", function (d) { return projection([d.long, d.lat])[1] })
-        })
-}
+// function drawObjects(topo, data) {
+//     let projection = setElementPosition(topo)[1]
+//         data.then(data => {
+//             console.log("Drawing objects on the map..")
+//             d3.select("svg").selectAll("image")
+//                 .data(data).enter() 
+//                 .append("image")
+//                     .attr("xlink:href", d => d.objectImage)
+//                     .attr("x", function (d) { return projection([d.long, d.lat])[0] })
+//                     .attr("y", function (d) { return projection([d.long, d.lat])[1] })
+//         })
+// }
 
 function setElementPosition(topo) {
     const width = 1900
