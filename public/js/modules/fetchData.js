@@ -3,10 +3,7 @@ export async function fetchData(queryUrl, query) {
     const jsonRes = await res.json()
     let data = jsonRes.results.bindings
     data = data.map(cleanData)
-    data = reMap(data)
-    // data = reMap(data)
-    // console.log(data);
-    
+    return data = reMap(data)
 }
 
 function cleanData(row) {
@@ -15,7 +12,6 @@ function cleanData(row) {
     Object.entries(row)
     .forEach(([key, propValue]) => {
         result[key] = propValue.value
-
     })    
 
     return result
@@ -23,18 +19,18 @@ function cleanData(row) {
 
 function reMap(data) {
     return data.reduce((provinces, entry) => {
-        // console.log(entry)
-        console.log(provinces)
         const citiesObject = {
             name: entry.cityName,
             lat: entry.latCity,
-            long: entry.longCity
+            long: entry.longCity,
+            objects: Number(entry.choCount)
         }
         const defaultObject = {
             province: entry.provinceName, 
             cities: [citiesObject], 
             lat: entry.latProv, 
-            long: entry.longProv 
+            long: entry.longProv,
+            totalObjects: citiesObject.objects
         }
         const foundObject = provinces.find(item => {
             return item.province === entry.provinceName
@@ -43,32 +39,9 @@ function reMap(data) {
             provinces.push(defaultObject)
         } else {
             foundObject.cities.push(citiesObject)
+            foundObject.totalObjects += citiesObject.objects
         }
 
         return provinces
     }, [])
-
-    // console.log(data);
-    // let newData = data.reduce((provinces, entry) => {  
-    //     provinces[entry.provinceName] = provinces[entry.provinceName] || [{province: entry.provinceName, cities: [], lat: entry.latProv, long: entry.longProv}]
-    //     provinces[entry.provinceName].push({
-    //         city: entry.cityName,
-    //         cityLat: entry.latCity,
-    //         cityLong: entry.longCity
-    //     })
-    //     return provinces
-    // }, [])
-    // console.log(newData["Chûbu regio"][0])
-    // newData.forEach(region => region.map(regioEntry => {
-    //     if (Object.keys(regioEntry)[0] !== 'province') {
-    //         newData["Chûbu regio"][0].cities.push(regioEntry)
-    //         console.log(regioEntry);
-    //     }
-    // }))
-    // // newData = newData.reduce(() => {
-
-    // // })
-    // console.log(newData);
-    
-    // return newData
 }

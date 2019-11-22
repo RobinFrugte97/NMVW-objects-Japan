@@ -1,9 +1,10 @@
 body {
     display: flex;
     flex-direction: column;
+    background-color: lightslategray;
 }
 .feature {
-    fill: lightgreen;
+    fill: lightgrey;
     stroke: black;
     stroke-width: 1px;
     stroke-linejoin: round;
@@ -12,11 +13,13 @@ body {
 h1 {
     font-family: sans-serif;
     text-align: center;
+    color: white;
 }
-image {
-    transform: translate(-1em, -1em);
-    width: 4em;
-	height: 2em;
+circle {
+    fill: orange;
+    stroke: black;
+    stroke-width: 3px;
+    opacity: .5;
 }
 svg {
     width: 1900px;
