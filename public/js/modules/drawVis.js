@@ -1,49 +1,84 @@
 export function drawVis(chartLocation, data) {    
     d3.json(chartLocation).then(topo => {
         d3.select("body").append("svg")
+        d3.select("svg").append("g").attr("id", "mainG")
         drawChart(topo)
         drawRegionCircles(topo, data)
     })
-} 
+}
+
+let zoom = d3.zoom()
+    .scaleExtent([1 / 2, 100])
+    .on("zoom", zoomed)
+
+
+function zoomed() {
+    let chartContainer = d3.select("#mainG")    
+    chartContainer.attr('transform', 'translate(' +d3.event.transform.x+', '+d3.event.transform.y+') scale('+d3.event.transform.k+')');
+};
+
+function narrower(data) {
+    let cityData = data.cities
+    console.log(cityData);
+    actuallyDrawThem(cityData)
+}
 
 function drawChart(topo) {
     console.log("Drawing map of Japan...")
-    let svg = d3.select("svg")
+    let svg = d3.select("#mainG")
     let chartContainer = svg.append("g")
     chartContainer.selectAll("path")
         .data(topo.features).enter()
         .append("path")
             .attr("class", "feature")
             .attr("d", setElementPosition(topo)[0])
+    svg.call(zoom)
 }
-let centered
 
 function drawRegionCircles(topo, data) {
     console.log(topo)
-    console.log(data)
-    
+    console.log(data) 
     let projection = setElementPosition(topo)[1]
-    data.then(data => {
-        console.log(data);
-        let scale = d3.scaleLinear().domain([5, 175]).range([0, 1])
-        
-        console.log("Drawing objects on the map..")
-        d3.select("svg").selectAll("circle")
-            .data(data).enter() 
+
+    
+    data.then(data => actuallyDrawThem(data, projection))
+}
+
+function actuallyDrawThem(data, projection) {
+    console.log(data);
+    let scale = d3.scaleLinear().domain([5, 175]).range([0, 1])
+
+    console.log("Drawing objects on the map..")
+    let circles =  d3.select("#mainG").selectAll("circle")
+        .data(data)
+        circles.attr("cx", function (d) { return projection([d.long, d.lat])[0] })
+            .attr("cy", function (d) { return projection([d.long, d.lat])[1] })
+            .attr("r", d => {
+                if (scale(d.totalObjects * 2) > 150) {
+                    return 50
+                } else if (scale(d.totalObjects * 2) < 1) {
+                    return 5
+                } else {
+                    return scale(d.totalObjects * 2)
+                }
+            })
+            .on("click", narrower)
+        circles.enter()
             .append("circle")
-                .attr("cx", function (d) { return projection([d.long, d.lat])[0] })
-                .attr("cy", function (d) { return projection([d.long, d.lat])[1] })
-                .attr("r", d => {
-                    if (scale(d.totalObjects*2) > 150) {
-                        return 50
-                    } else if (scale(d.totalObjects*2) < 1) {
-                        return 5
-                    } else {
-                        return scale(d.totalObjects * 2)
-                    }
-                })
-                .on("click", clicked)
-    })
+            .attr("cx", function (d) { return projection([d.long, d.lat])[0] })
+            .attr("cy", function (d) { return projection([d.long, d.lat])[1] })
+            .attr("r", d => {
+                if (scale(d.totalObjects * 2) > 150) {
+                    return 50
+                } else if (scale(d.totalObjects * 2) < 1) {
+                    return 5
+                } else {
+                    return scale(d.totalObjects * 2)
+                }
+            })
+            .on("click", narrower)
+        circles.exit().remove()
+
 }
 
 function setElementPosition(topo) {
@@ -70,41 +105,4 @@ function setElementPosition(topo) {
         height - (bounds[0][1] + bounds[1][1]) / 2]);
     path = path.projection(projection);
     return [path, projection]
-}
-
-function clicked(d, topo) {
-    console.log(d);
-    console.log(topo);
-    
-    
-    let x, y, k;
-    let width = 1900
-    let height = 800
-    let projection = setElementPosition(topo)[1]
-    let path = setElementPosition(topo)[0]
-
-
-    if (d && centered !== d) {
-        let centroid = [d.lat, d.long]
-        console.log(centroid);
-        
-        x = centroid[0];
-        y = centroid[1];
-        k = 4;
-        centered = d;
-    } else {
-        x = width / 2;
-        y = height / 2;
-        k = 1;
-        centered = null;
-    }
-
-    let svg = d3.select("svg")
-    svg.selectAll("circle")
-        .classed("active", centered && function (d) { return d === centered; });
-
-    svg.transition()
-        .duration(750)
-        .attr("transform", "scale(" + k + ")translate(" + -x + "," + -y + ")")
-        .style("stroke-width", 1.5 / k + "px");
 }
