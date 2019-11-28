@@ -21,16 +21,16 @@ function reMap(data) {
     return data.reduce((provinces, entry) => {
         const citiesObject = {
             name: entry.cityName,
-            lat: entry.latCity,
-            long: entry.longCity,
+            lat: Number(entry.latCity),
+            long: Number(entry.longCity),
             objects: Number(entry.choCount)
         }
         const defaultObject = {
             province: entry.provinceName, 
             cities: [citiesObject], 
-            lat: entry.latProv, 
-            long: entry.longProv,
-            totalObjects: citiesObject.objects
+            lat: Number(entry.latProv), 
+            long: Number(entry.longProv),
+            objects: citiesObject.objects
         }
         const foundObject = provinces.find(item => {
             return item.province === entry.provinceName
@@ -39,7 +39,7 @@ function reMap(data) {
             provinces.push(defaultObject)
         } else {
             foundObject.cities.push(citiesObject)
-            foundObject.totalObjects += citiesObject.objects
+            foundObject.objects += citiesObject.objects
         }
 
         return provinces

@@ -2,6 +2,8 @@ body {
     display: flex;
     flex-direction: column;
     background-color: lightslategray;
+    font-family: sans-serif;
+
 }
 .feature {
     fill: lightgrey;
@@ -11,7 +13,6 @@ body {
 }
 
 h1 {
-    font-family: sans-serif;
     text-align: center;
     color: white;
 }
@@ -21,7 +22,33 @@ circle {
     stroke-width: 3px;
     opacity: .5;
 }
-svg {
+#chart {
     width: 1900px;
     height: 800px;
+}
+#legend {
+    position: absolute;
+    width: 15em;
+    height: 22em;
+    top: 50%;
+    margin-left: 2em;
+}
+button {
+    position: absolute;
+    width: 8em;
+    height: 4em;
+    margin-left: 2em;
+    top: 90%;
+    background-color: orange;
+    border: black solid 1px;
+    color: black;
+}
+h2 {
+    position: absolute;
+    color: white;
+    left: 80%;
+    top: 80%
+}
+text {
+    fill: white;
 }
