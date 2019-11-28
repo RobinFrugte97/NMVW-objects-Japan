@@ -45,11 +45,12 @@ Most items have at least:
 I'm gathering data about all objects in Japan to then plot them on a map of Japan to see where in Japan most objects originate from.
 
 I'm getting the following data:
-- Object name
-- The date the object was created
-- The geographic location in longitude and latitude
-- The place name the object originates from
-- The image of the object
+- Japanese regions with objects
+- The geocoordinates of that region in longitude and latitude
+- The total amount of objects within that region
+- All underlying cities that have objects
+- The geocoordinates of that city in longitude and latitude
+- The amount of objects within that city
 
 The SPARQL query I'm using to retrieve the aforementioned data for my application: 
 
