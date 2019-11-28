@@ -12,7 +12,7 @@ More info can be found in my [wiki](https://github.com/RobinFrugte97/frontend-da
 My concept is about giving people a topographical visualisation of all the objects in Japan. The visualisation is not meant to accurately narrow down which object came from which region, but to give people a general vision.
 ![](https://github.com/RobinFrugte97/frontend-data/blob/master/src/images/fdHome.png)
 
-# D3
+# D3 update pattern
 
 To create an interactive visualisation, I make use of the update pattern within D3. I reuse existing DOM elements (created in D3) and load different data into them. I add additional elements if needed, and remove any leftover elements after loading new data to visualize. Read more about the D3 update pattern in my [wiki](https://github.com/RobinFrugte97/frontend-data/wiki/D3-Update-pattern).
 
