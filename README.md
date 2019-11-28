@@ -1,19 +1,20 @@
 # Livelink
 
-[Objecten van Japan](https://robinfrugte97.github.io/functional-programming/public/index.html)
+[Objecten van Japan](https://robinfrugte97.github.io/frontend-data/public/index.html)
 
 # Frontend data
 
-More info can be found in my [wiki](https://github.com/RobinFrugte97/functional-programming/wiki/Functional-programming).
+More info can be found in my [wiki](https://github.com/RobinFrugte97/frontend-data/wiki).
 
 
 # Concept
 
-
+My concept is about giving people a topographical visualisation of all the objects in Japan. The visualisation is not meant to accurately narrow down which object came from which region, but to give people a general vision.
+![](https://github.com/RobinFrugte97/frontend-data/blob/master/src/images/fdHome.png)
 
 # Wiki
 
-My progress, experiments, thoughts and code snippets can be found in my [wiki](https://github.com/RobinFrugte97/functional-programming/wiki/Functional-programming). My wiki consists of a more detailed page about my [concept](https://github.com/RobinFrugte97/functional-programming/wiki/Concept), a [daily progression](https://github.com/RobinFrugte97/functional-programming/wiki/Daily-progress) page which discribes what's going on day-to-day. There is a page dedicated to [functional programming](https://github.com/RobinFrugte97/functional-programming/wiki/Functional-programming), where I describe what functional programming is about and some examples from tutorials. I also describe some of my [experiments](https://github.com/RobinFrugte97/functional-programming/wiki/Experiments) throughout the project. I have also practised with [cleaning data in a functional manner](https://github.com/RobinFrugte97/functional-programming/wiki/Datacleaning).
+My progress, experiments, thoughts and code snippets can be found in my [wiki](https://github.com/RobinFrugte97/frontend-data/wiki). My wiki consists of a more detailed page about my [concept](https://github.com/RobinFrugte97/frontend-data/wiki/Concept). There is a page dedicated to [D3 update pattern](https://github.com/RobinFrugte97/frontend-data/wiki/D3-Update-pattern), where I describe what D3 update pattern is about and how I implemented it into my project. I also describe some of my [experiments](https://github.com/RobinFrugte97/frontend-data/wiki/Experiments) throughout the project. I have also practised with [cleaning data with the reduce method](https://github.com/RobinFrugte97/functional-programming/wiki/Datacleaning).
 
 ## Get started
 
@@ -61,25 +62,33 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 	PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 	PREFIX wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>
 	PREFIX gn: <http://www.geonames.org/ontology#>
+		
+	SELECT ?provinceName ?cityName ?latCity ?longCity ?latProv ?longProv (COUNT(?cho)AS ?choCount) WHERE {
+			# Follow the database relations to navigate down to city level in Japan.
+			<https://hdl.handle.net/20.500.11840/termmaster6917> skos:narrower ?region .
+			?region skos:narrower ?province .
+			?province skos:prefLabel ?provinceName .
+			?region skos:prefLabel ?regionName .
+			?province skos:narrower ?city .
+			?city skos:prefLabel ?cityName .
 	
-	SELECT ?cho ?printName ?placeName ?printImage ?date ?lat ?long WHERE {
-  		<https://hdl.handle.net/20.500.11840/termmaster6917> skos:narrower* ?place .
-	    ?place skos:prefLabel ?placeName .
-  		?place skos:exactMatch/wgs84:lat ?lat .
-  		?place skos:exactMatch/wgs84:long ?long .
-  		?place skos:exactMatch/gn:parentCountry ?land .
-
-	   ?cho dc:title ?printName ;
-	        dc:type ?type ;
-	        dct:spatial ?place ;
-	        edm:isShownBy ?printImage ;
-  			dct:created ?date .
-	}
+			# Get the geolocation of both the provinces and the cities in Japan.
+			?province skos:exactMatch/wgs84:lat ?latProv .
+			?province skos:exactMatch/wgs84:long ?longProv .    	
+			?city skos:exactMatch/wgs84:lat ?latCity .
+			?city skos:exactMatch/wgs84:long ?longCity .
+			
+			# Get any object as long as it originates from one of the cities.
+			?cho ?b ?c .
+			?cho dct:spatial ?city .
+			
+	} ORDER BY ?provinceName
 ```
 ### Original data
-
+![](https://raw.githubusercontent.com/RobinFrugte97/frontend-data/master/src/images/dataResult.png)
 
 ---
 ## Acknowledgements
 
 - [NMVW](http://collectie.wereldculturen.nl/), for giving us the opportunity to work with their data,
+- [Kris Kuiper](Github.com/kriskuiper), for helping my formulate my data cleaning function.
