@@ -21,6 +21,8 @@ circle {
     stroke: black;
     stroke-width: 3px;
     opacity: .5;
+    cursor: pointer;
+
 }
 #chart {
     width: 1900px;
