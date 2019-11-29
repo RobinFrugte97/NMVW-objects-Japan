@@ -4,6 +4,7 @@
 
 # Frontend data
 
+The goal of this course is to build an interactive visualisation using D3.
 More info can be found in my [wiki](https://github.com/RobinFrugte97/frontend-data/wiki).
 
 
