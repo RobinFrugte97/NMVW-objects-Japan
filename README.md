@@ -11,7 +11,7 @@ More info can be found in my [wiki](https://github.com/RobinFrugte97/frontend-da
 # Concept
 
 My concept is about giving people a topographical visualisation of all the objects in Japan. The visualisation is not meant to accurately narrow down which object came from which region, but to give people a general vision.
-![](https://raw.githubusercontent.com/RobinFrugte97/frontend-data/blob/master/src/images/fdHome.png)
+![](https://raw.githubusercontent.com/RobinFrugte97/frontend-data/master/src/images/fdHome.png)
 
 # D3 update pattern
 
